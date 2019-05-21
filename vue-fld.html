@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OrderList</title>
+
+  <!-- Vue -->
+  <script src="https://unpkg.com/vue"></script>
+
+</head>
+
+<body>
+
+  <div id="app">
+    <div class="lable-input">
+      <input class="material-input" v-model="w" type="text" placeholder="Ширина мм">
+      <p></p>
+      <center>
+      <transition name="slide-fade">
+        <label v-show="width!=''" type="text">Ширина мм</label>
+      </transition>
+      </center>
+    </div>
+    <div class="lable-input">
+      <input class="material-input" v-model="h" type="text" placeholder="Высота мм">
+      <p></p>
+      <center>
+      <transition name="slide-fade">
+        <label v-show="height!=''" type="text">Высота мм</label>
+      </transition>
+      </center>
+    </div>
+  </div>
+
+</body>
+
+</html>
+
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      w: '',
+      h: ''
+    },
+    computed: {
+      width: function () {
+        this.w = isNaN(parseInt(this.w)) ? '' : '' + parseInt(this.w)
+        return this.w
+      },
+      height: function () {
+        this.h = isNaN(parseInt(this.h)) ? '' : '' + parseInt(this.h)
+        return this.h
+      }
+    }
+  })
+</script>
+
+<style>
+
+.lable-input {
+  display: block;
+  float: left;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  margin: 20px auto;
+  height: 50px;
+  padding: 10px;
+}
+
+.material-input {
+  font-size: 20px;
+  margin: 0px;
+  display: block;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid gray;
+  text-align: center;
+  padding: 10px auto;
+  width:100%;
+}
+
+p {
+  padding: 0;
+  margin: -1px; 
+  height: 0;
+}
+
+.material-input + p::before {
+  transition: width .5s ease;
+  display: block;
+  content: '';
+  width: 0px;
+  height: 2px;
+  background-color: #000000;
+  margin: 0px auto;
+}
+
+.material-input:focus + p::before {
+  width: 100%;
+}
+
+label {
+  padding-top: 3px;
+  margin: 0;
+  display: block;
+  color: rgba(53, 52, 52, 0.801);
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all .5s ease;
+  font-size: 20px;
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+#frame {
+  margin: auto;
+  width: 800px;
+  height: 300px;
+}
+
+</style>
