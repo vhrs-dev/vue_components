@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Element block button-input-button</title>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <div style="width: 30%;">
+
+            <form>
+                <btn-inpt-btn
+                    class="lmnt-blck"
+                    v-bind:pattern="/[^0-9]+/g"
+                    v-bind:minval="minVal"
+                    v-bind:initval="initVal"/>
+            </form>
+        </div>
+    </div>
+
+    <template id="i3_btn-inpt-btn">
+        <div>
+            <div class="lmnt-blck w-100">
+                <button type="button" class="btn-fl lmnt-left" v-on:click="onDecrement()">&#8722;</button>
+                <input type="text" class="inpt-fl lmnt-center" v-bind:placeholder="minval" v-model="count">
+                <button type="button" class="btn-fl lmnt-right" v-on:click="onIncrement()">&#43;</button>
+            </div>
+        </div>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</body>
+
+</html>
+
+<style type="text/css">
+
+.lmnt-blck {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 1.5rem;
+    font-size: 1rem;
+    height: 2rem;
+}
+.btn-fl {
+    flex-basis: 30%;
+    flex-shrink:2;
+    flex-grow: 1;
+}
+.inpt-fl {
+    flex-basis: 40%;
+    text-align: center;
+    flex-shrink:1;
+    flex-grow: 2;
+}
+.w-100 {
+    width: 100%;
+}
+
+.lmnt-left {
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #aeaeae;
+}
+.lmnt-right {
+    border-radius:  0 5px 5px 0;
+    border: 1px solid #aeaeae;
+    border-left: none;
+}
+.lmnt-center {
+    border: 1px solid #aeaeae;
+    border-left: none;
+}
+
+</style>
+
+<script type="text/babel">
+
+    Vue.component('btn-inpt-btn', {
+        template: '#i3_btn-inpt-btn',
+        props: {
+            minval: Number,
+            initval: Number,
+            pattern: RegExp,
+        },
+        data() {
+            return {
+                count: 1
+            }
+        },
+        methods: {
+            onIncrement: function () {
+                ++this.count;
+            },
+            onDecrement: function () {
+                --this.count;
+            }
+        },
+        watch: {
+            count: function (val) {
+                if (Number(val) < 1) {
+                    this.count = 1;
+                } else {
+                    this.count = String(val).replace(this.pattern, '');
+                }
+            }
+        }
+    })
+
+    new Vue({
+        el: '#app',
+        data: {
+            minVal: 1,
+            initVal: 1
+        }
+    })
+
+</script>
